@@ -1,10 +1,17 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import javafx.util.Pair;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 /**
@@ -12,19 +19,65 @@ import java.util.Scanner;
  */
 public class Server {
 
-    public static void main(String[] args) throws IOException {
+    MysqlDataSource ds;
+    Connection con;
 
-        int number, temp;
+    public void createServer() throws IOException, SQLException {
+
+        connect();
+
+        String answer;
+        Pair question;
 
         ServerSocket server = new ServerSocket(9090, 0, InetAddress.getByName("localhost"));
         Socket clientConnection = server.accept();
         Scanner sc = new Scanner(clientConnection.getInputStream());
-        number = sc.nextInt();
 
-        temp = number*2;
-
+        question = createQuestion();
         PrintStream p = new PrintStream(clientConnection.getOutputStream());
-        p.println(temp);
+        p.println(question.getKey());
+
+        answer = sc.nextLine();
+        System.out.println(answer);
+
+        p.println(question.getValue().equals(answer));
+
+    }
+
+
+    public Pair<String, String> createQuestion(){
+        String select = "SELECT artist, album, låtnavn, utgivelsesår FROM quizdata ORDER BY RAND () LIMIT 1";
+
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(select);
+
+            while(rs.next()){
+                String artist = rs.getString("Artist");
+                String album = rs.getString("Album");
+                String låtnavn = rs.getString("Låtnavn");
+                int utgivelsesår = rs.getInt("Utgivelsesår");
+
+                return new Pair<String, String>("Hvem ga ut låten " + låtnavn + " i " + utgivelsesår + "?", artist);
+
+//                System.out.println("Artist: " + artist);
+//                System.out.println("Album: " + album);
+//                System.out.println("Låtnavn: " + låtnavn);
+//                System.out.println("Utgivelsesår: " + utgivelsesår + "\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void connect() throws SQLException {
+        ds = new MysqlDataSource();
+        ds.setDatabaseName("innlevering2");
+        ds.setServerName("localhost");
+        ds.setUser("Vegard");
+        ds.setPassword("something");
+        con = ds.getConnection();
     }
 
 }

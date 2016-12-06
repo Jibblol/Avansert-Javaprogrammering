@@ -12,17 +12,17 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
 
-        int number, temp;
+        String answer, question;
 
         Scanner sc = new Scanner(System.in);
         Socket serverConnection = new Socket("127.0.0.1", 9090);
         Scanner sc1 = new Scanner(serverConnection.getInputStream());
-        System.out.println("Enter any number to get it multiplied by 2");
-        number = sc.nextInt();
         PrintStream p = new PrintStream(serverConnection.getOutputStream());
-        p.println(number);
-        temp = sc1.nextInt();
-        System.out.println(temp);
+        question = sc1.nextLine();
+        System.out.println(question);
+        answer = sc.nextLine();
+        p.println(answer);
+        System.out.println(sc1.nextLine());
 
     }
 }
