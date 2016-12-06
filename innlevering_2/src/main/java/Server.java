@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -33,15 +34,30 @@ public class Server {
         Socket clientConnection = server.accept();
         Scanner sc = new Scanner(clientConnection.getInputStream());
 
-        question = createQuestion();
-        PrintStream p = new PrintStream(clientConnection.getOutputStream());
-        p.println(question.getKey());
+        while(true){
+            if(clientConnection.isConnected()){
+                questionLoop(clientConnection, sc);
+            }
+        }
 
-        answer = sc.nextLine();
-        System.out.println(answer);
+    }
 
-        p.println(question.getValue().equals(answer));
+    private void questionLoop(Socket clientConnection, Scanner sc) throws IOException {
+        Pair question;
+        String answer;
+        try {
+            question = createQuestion();
+            PrintStream p = new PrintStream(clientConnection.getOutputStream());
+            p.println(question.getKey());
 
+            answer = sc.nextLine();
+            System.out.println(answer);
+
+            p.println(question.getValue().equals(answer));
+        }
+        catch(NoSuchElementException e){
+
+        }
     }
 
 
