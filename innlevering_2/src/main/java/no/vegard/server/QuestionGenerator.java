@@ -1,6 +1,7 @@
+package no.vegard.server;
+
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.util.Pair;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -9,11 +9,11 @@ import static org.junit.Assert.*;
  */
 public class DBServiceTest {
 
-
+    static DBService tester;
 
     @BeforeClass
     public static void testSetup() {
-        DBService tester;
+
         tester = new DBService();
     }
 
@@ -21,4 +21,10 @@ public class DBServiceTest {
     public static void testCleanup() {
         // Do your cleanup here like close URL connection , releasing resources etc
     }
+
+    @Test
+    public void testConnection(){
+
+    }
+
 }

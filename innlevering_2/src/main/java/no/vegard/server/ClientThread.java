@@ -1,5 +1,6 @@
-import javafx.util.Pair;
+package no.vegard.server;
 
+import javafx.util.Pair;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;

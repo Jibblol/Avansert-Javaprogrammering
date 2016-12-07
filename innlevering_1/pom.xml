@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.Westerdals</groupId>
-    <artifactId>Vegard</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Innlevering1</artifactId>
+    <version>1.0</version>
 
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependencies>

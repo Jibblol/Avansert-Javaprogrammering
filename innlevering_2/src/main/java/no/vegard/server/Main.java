@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.sql.SQLException;
+package no.vegard.server;
 
 /**
  * Created by Jibb on 05.12.2016.

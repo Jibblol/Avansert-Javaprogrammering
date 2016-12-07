@@ -1,8 +1,9 @@
+package no.vegard.server;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 
 /**
  * Created by Jibb on 05.12.2016.

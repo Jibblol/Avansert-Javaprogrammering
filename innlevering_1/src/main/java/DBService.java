@@ -20,6 +20,10 @@ public class DBService {
     MysqlDataSource ds;
     Connection con;
 
+    public DBService(){
+
+    }
+
     public void copyFile(String fileName, String tableName){
         BufferedReader reader = null;
 
