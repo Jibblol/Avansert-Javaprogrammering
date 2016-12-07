@@ -1,8 +1,7 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -10,29 +9,33 @@ import java.util.Scanner;
  */
 public class Client {
 
-    public static void main(String[] args) throws IOException {
-
-        String answer, question;
-
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Socket serverConnection = new Socket("127.0.0.1", 9090);
-        Scanner sc1 = new Scanner(serverConnection.getInputStream());
-        PrintStream p = new PrintStream(serverConnection.getOutputStream());
-
-        while(true){
-            questionLoop(sc, sc1, p);
+        Scanner sc1;
+        PrintStream p;
+        try {
+            Socket serverConnection = new Socket("127.0.0.1", 9090);
+            sc1 = new Scanner(serverConnection.getInputStream());
+            p = new PrintStream(serverConnection.getOutputStream());
+        } catch(IOException e){
+            System.out.println("Feil: Kunne ikke koble til serveren");
+            return;
         }
-
-    }
-
-    private static void questionLoop(Scanner sc, Scanner sc1, PrintStream p) {
-        String question;
-        String answer;
-        question = sc1.nextLine();
-        System.out.println(question);
-        answer = sc.nextLine();
-        p.println(answer);
-        System.out.println(sc1.nextLine());
+        while(true){
+            try {
+                System.out.println(sc1.nextLine());
+                String input = sc.nextLine();
+                if (input.equals("exit")) {
+                    return;
+                }
+                p.println(input);
+                System.out.println(sc1.nextLine());
+            } catch (NoSuchElementException e) {
+                // server has died. abort.
+                System.out.println("Feil: Kunne ikke koble til serveren");
+                return;
+            }
+        }
     }
 }
 
