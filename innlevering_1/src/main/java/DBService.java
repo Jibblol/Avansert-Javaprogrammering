@@ -26,10 +26,6 @@ public class DBService {
     MysqlDataSource ds;
     Connection con;
 
-    public DBService(){
-
-    }
-
     /**
      * Reads from the specified text file and splits
      * the lines into readable data corresponding to the
