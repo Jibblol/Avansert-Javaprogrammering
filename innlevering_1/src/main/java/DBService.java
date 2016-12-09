@@ -10,7 +10,11 @@ import java.sql.Statement;
 import java.util.Arrays;
 
 /**
- *
+ * The DBService class reads text-files
+ * and splits them up where necessary.
+ * It then executes SQLs to create a table
+ * in a database, and then it inserts the data
+ * from the chosen text-file into the table.
  *
  * @author Vegard Ingebrigtsen
  * @version 1.0
@@ -39,32 +43,39 @@ public class DBService {
 
         try{
             reader = new BufferedReader(new FileReader(fileName));
+
+            // read column names
             String line = reader.readLine();
             String[] fieldNames = line.split("/");
             System.out.println(Arrays.toString(fieldNames));
 
+            // read data types
             line = reader.readLine();
             String[] fieldTypes = line.split("/");
             System.out.println(Arrays.toString(fieldTypes));
 
+            // read data size
             line = reader.readLine();
             String[] fieldSize = line.split("/");
             System.out.println(Arrays.toString(fieldSize));
 
             createTable(fieldNames, fieldTypes, fieldSize, tableName);
 
+            // read fourth line
             line = reader.readLine();
             String[] data = line.split("/");
             System.out.println(Arrays.toString(data));
 
             insertTable(data, tableName);
 
+            // read fifth line
             line = reader.readLine();
             data = line.split("/");
             System.out.println(Arrays.toString(data));
 
             insertTable(data, tableName);
 
+            // read sixth line
             line = reader.readLine();
             data = line.split("/");
             System.out.println(Arrays.toString(data));
@@ -82,10 +93,11 @@ public class DBService {
     }
 
     /**
-     * Creates a query consisting of the data
+     * Creates a query consisting of the array of values
      * to be inserted into the table in the database.
+     * It then runs the query, and the data is inserted into the table.
      *
-     * @param data the data created in copyFile()
+     * @param data array of values to be inserted
      * @param tableName name of the table in the database
      */
     private void insertTable(String[] data, String tableName) {
