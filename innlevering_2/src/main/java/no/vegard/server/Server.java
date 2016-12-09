@@ -6,12 +6,26 @@ import java.net.ServerSocket;
 import java.net.UnknownHostException;
 
 /**
- * Created by Jibb on 05.12.2016.
+ * This class creates a server that runs on localhost.
+ * It also creates a thread that, in turn, is assigned
+ * to the client(s).
+ *
+ * @author Vegard Ingebrigtsen
+ * @version 1.0
+ * @since 04.12.2016
  */
 public class Server {
 
+    /**
+     * Class constructor.
+     */
     QuestionGenerator questions;
 
+    /**
+     * Creates a server running on localhost.
+     * Threads for the connecting client(s) are also created
+     * so that several clients can communicate with the server simultaneously.
+     */
     public void createServer(){
         questions = new QuestionGenerator();
         ServerSocket server;

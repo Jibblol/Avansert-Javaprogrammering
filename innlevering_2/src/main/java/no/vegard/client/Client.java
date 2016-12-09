@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
+ * This class creates a new client and connects to the server.
+ *
  * Created by Jibb on 05.12.2016.
  */
 public class Client {
@@ -20,6 +22,7 @@ public class Client {
             sc1 = new Scanner(serverConnection.getInputStream());
             p = new PrintStream(serverConnection.getOutputStream());
         } catch(IOException e){
+            // Could not connect to server..
             System.out.println("Feil: Kunne ikke koble til serveren");
             return;
         }
@@ -27,6 +30,7 @@ public class Client {
             try {
                 System.out.println(sc1.nextLine());
                 String input = sc.nextLine();
+                // If the user types "exit" the client disconnects and the thread dies
                 if (input.equals("exit")) {
                     return;
                 }

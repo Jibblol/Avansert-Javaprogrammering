@@ -8,7 +8,12 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * Created by Jibb on 07.12.2016.
+ * This class contains everything concerning
+ * the threads that are assigned to the connected clients.
+ *
+ * @author Vegard Ingebrigtsen
+ * @version 1.0
+ * @since 04.12.2016
  */
 public class ClientThread implements Runnable {
     private Socket clientConnection;
@@ -16,9 +21,18 @@ public class ClientThread implements Runnable {
     private PrintStream pr;
 
     private boolean isAlive = true;
-
+    /**
+     * Class constructor.
+     */
     private QuestionGenerator questions;
 
+    /**
+     * Creates a new client thread.
+     *
+     * @param clientConnection the clients connection to the server
+     * @param questions the generated questions
+     * @throws IOException
+     */
     public ClientThread(Socket clientConnection, QuestionGenerator questions) throws IOException {
         System.out.println("Created new client thread");
 
@@ -28,7 +42,13 @@ public class ClientThread implements Runnable {
         this.questions = questions;
     }
 
-    public void run() throws NoSuchElementException {
+    /**
+     * Writes the generated questions out to the clients
+     * and checks if the answer corresponds to the
+     * data from the database. It then tells the client
+     * whether the answer is correct or not.
+     */
+    public void run() {
         while (isAlive) {
             try {
                 Pair<String, String> question = questions.createQuestion();
