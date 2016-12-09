@@ -1,7 +1,9 @@
 import java.sql.SQLException;
 
 /**
- * Created by Jibb on 15.10.2016.
+ * @author vegard Ingebrigtsen
+ * @version 1.0
+ * @since 25.11.2016
  */
 public class Main {
     public static void main(String[] args) {

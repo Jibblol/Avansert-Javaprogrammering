@@ -10,10 +10,12 @@ import java.sql.Statement;
 import java.util.Arrays;
 
 /**
- * Created by Jibb on 15.10.2016.
+ *
+ *
+ * @author Vegard Ingebrigtsen
+ * @version 1.0
+ * @since 28.11.2016
  */
-
-
 
 public class DBService {
 
@@ -24,6 +26,14 @@ public class DBService {
 
     }
 
+    /**
+     * Reads from the specified text file and splits
+     * the lines into readable data corresponding to the
+     * columns in the table.
+     *
+     * @param fileName name of the file which the method reads from
+     * @param tableName name of the table in the database
+     */
     public void copyFile(String fileName, String tableName){
         BufferedReader reader = null;
 
@@ -71,6 +81,13 @@ public class DBService {
 
     }
 
+    /**
+     * Creates a query consisting of the data
+     * to be inserted into the table in the database.
+     *
+     * @param data the data created in copyFile()
+     * @param tableName name of the table in the database
+     */
     private void insertTable(String[] data, String tableName) {
         String insertString =
                 "INSERT INTO " + tableName + "\n" +
@@ -99,6 +116,16 @@ public class DBService {
         }
     }
 
+    /**
+     * A query is made so a table in the database can be created.
+     * The query consists of the field names, data types and sizes,
+     * aswell as the name of the table we intend to use.
+     *
+     * @param fieldNames name of the fields in the table
+     * @param fieldTypes describes the data types in the different fields in the database
+     * @param fieldSize size of the fields data type
+     * @param tableName name of the table
+     */
     public void createTable(String[] fieldNames, String[] fieldTypes, String[] fieldSize, String tableName) {
         String createString =
                 "CREATE table " + tableName + "(\n";
@@ -136,6 +163,12 @@ public class DBService {
 
     }
 
+    /**
+     * Gets all the data in the table 'tableName'
+     * and writes it to console.
+     *
+     * @param tableName name of the table in the database
+     */
     public void showTable(String tableName){
         String select = "SELECT * FROM " + tableName;
 
@@ -163,11 +196,16 @@ public class DBService {
 
     }
 
+    /**
+     * Connects to the database.
+     *
+     * @throws SQLException
+     */
     public void connect() throws SQLException{
         ds = new MysqlDataSource();
         ds.setDatabaseName("innlevering1");
         ds.setServerName("localhost");
-        ds.setUser("Vegard");
+        ds.setUser("vegard");
         ds.setPassword("something");
         con = ds.getConnection();
     }
